@@ -7,13 +7,15 @@ from math import log
 
 contKnn = 0
 coutEuclidean = 0
+coutHisto = 0
 
 def class_histogram(kn_neighbors, n_classes):
     '''Faz a contagem das classes dos k vizinhos mais próximos.
     Recebe o vetor com os k mais próximos.'''
-    
+    global coutHisto
     c = [0] * n_classes
     for i in kn_neighbors:
+        coutHisto = coutHisto + 1
         c[i] += 1
     return c
 
@@ -51,13 +53,19 @@ for i, x in enumerate(X_test):
 nlogn = (contKnn * (len(X_train) * log(len(X_train), 2)))
 
 #print n lg n
-# print ("n lg n: %d" % nlogn)
+print ("n lg n: %d" % nlogn)
 
 #print contador knn
-# print("Euclidean: %d" % coutEuclidean)
+print("Euclidean: %d" % coutEuclidean)
+
+# print contador knn
+print("Histogram: %d" % coutHisto)
 
 #total
-print("Total: %d" % (nlogn + coutEuclidean + (2*len(X))))
+print("Total: %d" % (nlogn + coutEuclidean + (len(X)*len(X)) + coutHisto))
+
+# print("Total Estourado: %d" % (nlogn + 64*(coutEuclidean) + (2*len(X)) + coutHisto))
+
 
 # A acurácia é dada por acertos / (acertos + erros).
 print ("Acurácia: %.02f%%" % (hits / float(hits + misses) * 100))
